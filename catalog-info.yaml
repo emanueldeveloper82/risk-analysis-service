@@ -3,6 +3,8 @@ kind: Component
 metadata:
   name: risk-analysis-service
   description: "Serviço de análise de risco para operações de investimento e produtos financeiros"
+  annotations:
+    backstage.io/api-docs-ref: file: ./openapi.yaml
 spec:
   type: service
   lifecycle: production
