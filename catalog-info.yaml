@@ -3,10 +3,25 @@ kind: Component
 metadata:
   name: risk-analysis-service
   description: "Serviço de análise de risco para operações de investimento e produtos financeiros"
-  annotations:
-    backstage.io/api-docs-ref: file: ./openapi.yaml
 spec:
   type: service
   lifecycle: production
   owner: group:produtos-financeiros
+  domain: financeiro
   system: system:wealth-manager
+  providesApis:
+    - risk-analysis-service-api
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: risk-analysis-service-api
+  description: "Especificação OpenAPI do Risk Analysis Service"
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:produtos-financeiros
+  system: system:wealth-manager
+  definition:
+    $text: ./openapi.yaml
