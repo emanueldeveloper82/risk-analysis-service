@@ -1,0 +1,182 @@
+openapi: 3.0.0
+info:
+  title: Risk Analysis Service API
+  description: Serviço de análise de risco para operações de investimento
+  version: 1.0.0
+  contact:
+    name: Equipe Produtos Financeiros
+    email: produtos-financeiros@zetra-bank.com
+
+servers:
+  - url: https://api.zetra-bank.com/risk-analysis
+    description: Production
+
+paths:
+  /analyze/investment:
+    post:
+      summary: Analisar risco de um investimento
+      operationId: analyzeInvestmentRisk
+      tags:
+        - Risk Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                investmentId:
+                  type: string
+                productType:
+                  type: string
+                amount:
+                  type: number
+                investmentPeriod:
+                  type: integer
+      responses:
+        '200':
+          description: Análise de risco
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  investmentId:
+                    type: string
+                  riskScore:
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                  riskLevel:
+                    type: string
+                    enum: [VERY_LOW, LOW, MEDIUM, HIGH, VERY_HIGH]
+                  recommendations:
+                    type: array
+                    items:
+                      type: string
+
+  /analyze/customer:
+    post:
+      summary: Analisar perfil de risco do cliente
+      operationId: analyzeCustomerRisk
+      tags:
+        - Risk Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customerId:
+                  type: string
+                age:
+                  type: integer
+                income:
+                  type: number
+                investmentExperience:
+                  type: string
+                  enum: [BEGINNER, INTERMEDIATE, ADVANCED, EXPERT]
+                riskTolerance:
+                  type: string
+                  enum: [CONSERVATIVE, MODERATE, AGGRESSIVE]
+      responses:
+        '200':
+          description: Perfil de risco do cliente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customerId:
+                    type: string
+                  riskProfile:
+                    type: string
+                  recommendedAllocation:
+                    type: object
+                    properties:
+                      stocks:
+                        type: number
+                      bonds:
+                        type: number
+                      fixedIncome:
+                        type: number
+                      cash:
+                        type: number
+
+  /risk-matrix:
+    get:
+      summary: Obter matriz de risco
+      operationId: getRiskMatrix
+      tags:
+        - Risk Analysis
+      responses:
+        '200':
+          description: Matriz de risco
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  matrix:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        riskLevel:
+                          type: string
+                        products:
+                          type: array
+                          items:
+                            type: string
+                        expectedReturn:
+                          type: number
+                        volatility:
+                          type: number
+
+  /risk-report/{reportId}:
+    get:
+      summary: Consultar relatório de análise de risco
+      operationId: getRiskReport
+      tags:
+        - Risk Reports
+      parameters:
+        - name: reportId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Relatório de análise
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reportId:
+                    type: string
+                  analysisDate:
+                    type: string
+                    format: date-time
+                  subject:
+                    type: string
+                  overallRiskScore:
+                    type: number
+                  detailedAnalysis:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        category:
+                          type: string
+                        riskScore:
+                          type: number
+                        findings:
+                          type: array
+                          items:
+                            type: string
+                  recommendations:
+                    type: array
+                    items:
+                      type: string
