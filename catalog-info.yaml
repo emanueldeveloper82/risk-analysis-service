@@ -5,5 +5,5 @@ metadata:
 spec:
   type: service
   lifecycle: production
-  owner: produtos-financeiros
-  system: wealth-manager
+  owner: group:produtos-financeiros
+  system: system:wealth-manager
