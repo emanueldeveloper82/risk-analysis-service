@@ -2,6 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: risk-analysis-service
+  description: "Serviço de análise de risco para operações de investimento e produtos financeiros"
 spec:
   type: service
   lifecycle: production
